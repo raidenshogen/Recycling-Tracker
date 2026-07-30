@@ -8,21 +8,22 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Household {
+public class Household extends User{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
     private String address;
     private Date JoinDate;
-    @OneToMany
+    private double TotalPoints;
+
+    @OneToMany(mappedBy = "household", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RecyclingEvent> recyclingEvents = new ArrayList<>();
 
 }
