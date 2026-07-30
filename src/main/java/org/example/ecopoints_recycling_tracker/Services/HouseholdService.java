@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class HouseholdService {
@@ -13,20 +14,22 @@ public class HouseholdService {
     private HouseholdRepository householdRepository;
 
 
-   public HashMap<Integer, Household>CreateHouseHold(HashMap<Integer, Household> maphouseholders) {
-      Household household = householdRepository.getById(maphouseholders.keySet().iterator().next());
+   public Household CreateHousehold(Household household) {
+       household = householdRepository.findByHouseholdId(household.getId());
       if (household != null) {
           System.out.println("Household already exists");
 
       }
-      household = new Household();
-      household.setAddress(maphouseholders.values().iterator().next().getAddress());
-      household.setName(maphouseholders.values().iterator().next().getName());
-      household.setJoinDate(maphouseholders.values().iterator().next().getJoinDate());
+      Household h1 = new Household();
+      h1.setAddress(household.getAddress());
+      h1.setName(household.getName());
+      h1.setJoinDate(household.getJoinDate());
 
       householdRepository.save(household);
+      Map<Integer,Household> mapHouseholders = new HashMap<>();
+      mapHouseholders.put(household.getId(), household);
 
-      return maphouseholders;
+      return household;
   }
 
 
