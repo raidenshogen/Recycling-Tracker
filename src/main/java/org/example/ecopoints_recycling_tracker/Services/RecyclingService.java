@@ -28,4 +28,34 @@ public class RecyclingService {
 
     }
 
+    public RecyclingEvent AddRecyclingEvent(RecyclingEvent RE){
+        RE=recyclingEventRepository.findById(RE.getId());
+        if(RE!=null){
+            System.out.println("recycling event already exists");
+        }
+        RecyclingEvent e = new RecyclingEvent();
+        e.setMatType(RE.getMatType());
+        e.setHousehold(RE.getHousehold());
+        e.setWeightKG(RE.getWeightKG());
+        e.setRecyclingDate(RE.getRecyclingDate());
+        e.getHousehold().getRecyclingEvents().add(e);
+        recyclingEventRepository.save(e);
+        return RE;
+    }
+    public void DeleteRecyclingEvent(RecyclingEvent RE){
+        RE=recyclingEventRepository.findById(RE.getId());
+        if(RE!=null){
+            recyclingEventRepository.delete(RE);
+            System.out.println("recycling event deleted");
+        }else {
+            System.out.println("recycling event not found");
+        }
+
+    }
+    public Double CalculateTotalEcoPoints(int weight,double tenpoints){
+        double EcoPoints = weight * tenpoints;
+        return EcoPoints;
+
+    }
+
 }

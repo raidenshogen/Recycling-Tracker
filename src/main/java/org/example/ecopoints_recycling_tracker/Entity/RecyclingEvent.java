@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity
 @NoArgsConstructor
@@ -18,8 +19,10 @@ public class RecyclingEvent {
     @Enumerated(EnumType.STRING)
     private MaterialType MatType;
     private float WeightKG;
-    private Date recyclingDate;
+    private LocalDateTime recyclingDate=LocalDateTime.now();
     private double EcoPoints;
+
+
 
     @ManyToOne
     @JoinColumn(name="household_id")
