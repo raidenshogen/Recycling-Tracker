@@ -7,6 +7,10 @@ import org.example.ecopoints_recycling_tracker.Repository.RecyclingEventReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +19,12 @@ import java.util.Map;
 public class HouseholdService {
     @Autowired
     private HouseholdRepository householdRepository;
-
+  @Autowired
+    private RecyclingEventRepository recyclingEventRepository;
 
 
    public Household CreateHousehold(Household household) {
-       household = householdRepository.findByHouseholdId(household.getId());
+       household = householdRepository.findById(household.getId());
       if (household != null) {
           System.out.println("Household already exists");
 
@@ -39,7 +44,7 @@ public class HouseholdService {
   }
 
   public double CalculateTotalPoints(Household household) {
-      List<RecyclingEvent> recyclingEventList=householdRepository.findAllRecyclingEventsByHouseholdId(household.getId());
+      List<RecyclingEvent> recyclingEventList=recyclingEventRepository.findByHousehold_Id(household.getId());
       double points=0;
       if (recyclingEventList.isEmpty()) {
           System.out.println("No recycling events found");
@@ -50,8 +55,84 @@ public class HouseholdService {
 
           }
       }
+      household.setTotalPoints(points);
       return  points;
   }
+
+  public void SavelogsForHouseholds() throws IOException {
+      FileWriter fw=new FileWriter("logs");
+
+      BufferedWriter bw=null;
+
+      try{
+       bw=new BufferedWriter(fw);
+       bw.write("List of Households With there Recycling event:");
+       bw.newLine();
+       int count=1;
+       for (Household household1 : householdRepository.findAll()) {
+           bw.write("Household"+ count +":");
+           bw.newLine();
+           bw.write(household1.getName());
+           bw.newLine();
+           bw.write(household1.getAddress());
+           bw.newLine();
+           bw.write(household1.getJoinDate().toString());
+           bw.newLine();
+           bw.write((int) household1.getTotalPoints());
+           bw.newLine();
+
+           int count2=1;
+           for(RecyclingEvent recyclingEvent : household1.getRecyclingEvents()) {
+               bw.write("Recycling Event"+ count2 +":");
+               bw.newLine();
+               bw.write("Material: "+recyclingEvent.getMatType());
+               bw.newLine();
+               bw.write("Weight in KG: "+recyclingEvent.getWeightKG());
+               bw.newLine();
+               bw.write("Recycling Date: "+recyclingEvent.getRecyclingDate().toString());
+               bw.newLine();
+               bw.write("Eco points :"+recyclingEvent.getEcoPoints());
+               count2++;
+               bw.close();
+
+           }
+          count++;
+       }
+
+      }catch(IOException e){
+          e.printStackTrace();
+      }
+
+  }
+ public List<RecyclingEvent> findAllRecyclingEventsByHouseholdId(int id) {
+       List<RecyclingEvent> lre=recyclingEventRepository.findByHousehold_Id(id);
+       return lre;
+ }
+ public float CalculateTotalWeights(Household household) {
+
+       List<RecyclingEvent>re=findAllRecyclingEventsByHouseholdId(household.getId());
+       float weigts=0;
+       for (RecyclingEvent recyclingEvent : re) {
+
+           weigts+=recyclingEvent.getWeightKG();
+       }
+       return weigts;
+
+ }
+
+ public Household HighestTotalPoints() {
+       List<Household>householdList=householdRepository.findAll();
+
+       Map<Household,Double > mapHouseholds = new HashMap<>();
+
+       for (Household household : householdList) {
+           mapHouseholds.put(household,household.getTotalPoints() );
+       }
+
+       Household h1 = mapHouseholds.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+
+       return h1;
+ }
 
 
 }

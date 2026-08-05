@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class RecyclingEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",unique = true, nullable = false)
     private int id;
     @Enumerated(EnumType.STRING)
     private MaterialType MatType;
@@ -26,7 +27,7 @@ public class RecyclingEvent {
 
     @ManyToOne
     @JoinColumn(name="household_id")
-    private Household Household;
+    private Household household;
 
 
 }

@@ -1,0 +1,46 @@
+
+type Users {
+    id : ID,
+    username:String,
+    email:String
+}
+
+type Household{
+    id: ID,
+    name:String,
+    country:String,
+    address:String ,
+    JoinDate:String,
+    TotalPoints: Float,
+    recyclingEvents:[RecyclingEvent]
+}
+
+type RecyclingEvent{
+    id:ID,
+    MaterialType:String,
+    WeightKG:Float ,
+    recyclingDate:String,
+    EcoPoints: Float,
+    household:Household
+}
+type Mutation{
+    CreateHousehold(household: Householdinput):Household,
+    CalculateTotalPoints(housholdId:ID):Float,
+    SavelogsForHouseholds:Boolean,
+    CalculateTotalWeights(household:Householdinput):Float,
+
+}
+type Query{
+    findAllRecyclingEventsByHouseholdId(id:ID):[RecyclingEvent],
+    HighestTotalPoints:Household
+}
+
+
+input Householdinput{
+    id: ID,
+    name:String,
+    country:String,
+    address:String ,
+    JoinDate:String,
+    TotalPoints: Float
+}

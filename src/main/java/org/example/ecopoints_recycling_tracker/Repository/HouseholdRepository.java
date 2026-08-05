@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 public interface HouseholdRepository extends JpaRepository<Household, Integer> {
 
-    public Household findByHouseholdId(int householdId);
-    public List<RecyclingEvent> findAllRecyclingEventsByHouseholdId(int householdId);
+    public Household findById(int householdId);
 }
