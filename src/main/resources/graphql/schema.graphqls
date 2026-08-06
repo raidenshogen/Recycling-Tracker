@@ -28,7 +28,10 @@ type Mutation{
     CalculateTotalPoints(housholdId:ID):Float,
     SavelogsForHouseholds:Boolean,
     CalculateTotalWeights(household:Householdinput):Float,
-
+    AddRecyclingEvent(RE:RecyclingEventinput ):RecyclingEvent,
+    DeleteRecyclingEvent(RE:RecyclingEventinput):Boolean,
+    CalculateTotalEcoPoints(weight:Int):Float,
+    TotalCommunityWeight:Float
 }
 type Query{
     findAllRecyclingEventsByHouseholdId(id:ID):[RecyclingEvent],
@@ -36,11 +39,18 @@ type Query{
 }
 
 
+
 input Householdinput{
-    id: ID,
     name:String,
     country:String,
     address:String ,
     JoinDate:String,
-    TotalPoints: Float
+
+}
+input RecyclingEventinput{
+    id:ID,
+    MaterialType:String,
+    WeightKG:Float ,
+    recyclingDate:String,
+
 }

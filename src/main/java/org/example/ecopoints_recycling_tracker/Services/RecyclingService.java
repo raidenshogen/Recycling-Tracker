@@ -16,7 +16,6 @@ public class RecyclingService {
     @Autowired
     private RecyclingEventRepository recyclingEventRepository;
 
-
 //    public void LogRecycling (MaterialType Mt, float Weight, Date dateRecycle){
 //        System.out.println("log recycling event");
 //        double pt = Weight * 10.00;
@@ -62,8 +61,8 @@ public class RecyclingService {
         }
 
     }
-    public Double CalculateTotalEcoPoints(int weight,double tenpoints){
-        tenpoints=10;
+    public Double CalculateTotalEcoPoints(int weight){
+        double tenpoints=10;
         double EcoPoints = weight * tenpoints;
         return EcoPoints;
 
