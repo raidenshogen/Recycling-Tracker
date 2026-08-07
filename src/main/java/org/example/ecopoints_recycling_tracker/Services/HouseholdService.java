@@ -33,8 +33,9 @@ public class HouseholdService {
       h1.setUsername(household.getUsername());
       h1.setPassword(household.getPassword());
       h1.setAddress(household.getAddress());
-      h1.setName(household.getName());
+      h1.setFullName(household.getFullName());
       h1.setJoinDate(household.getJoinDate());
+      h1.setTotalPoints(0);
 
       householdRepository.save(household);
       Map<Integer,Household> mapHouseholders = new HashMap<>();
@@ -72,7 +73,7 @@ public class HouseholdService {
        for (Household household1 : householdRepository.findAll()) {
            bw.write("Household"+ count +":");
            bw.newLine();
-           bw.write(household1.getName());
+           bw.write(household1.getFullName());
            bw.newLine();
            bw.write(household1.getAddress());
            bw.newLine();
@@ -93,10 +94,12 @@ public class HouseholdService {
                bw.newLine();
                bw.write("Eco points :"+recyclingEvent.getEcoPoints());
                count2++;
-               bw.close();
+
 
            }
+
           count++;
+           bw.close();
        }
 
       }catch(IOException e){

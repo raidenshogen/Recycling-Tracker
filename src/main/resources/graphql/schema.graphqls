@@ -24,12 +24,12 @@ type RecyclingEvent{
     household:Household
 }
 type Mutation{
-    CreateHousehold(household: Householdinput):Household,
+    CreateHousehold(household: Householdinput!):Household,
     CalculateTotalPoints(housholdId:ID):Float,
     SavelogsForHouseholds:Boolean,
-    CalculateTotalWeights(household:Householdinput):Float,
-    AddRecyclingEvent(RE:RecyclingEventinput ):RecyclingEvent,
-    DeleteRecyclingEvent(RE:RecyclingEventinput):Boolean,
+    CalculateTotalWeights(household:Householdinput!):Float,
+    AddRecyclingEvent(RE:RecyclingEventinput! ):RecyclingEvent,
+    DeleteRecyclingEvent(RE:RecyclingEventinput!):Boolean,
     CalculateTotalEcoPoints(weight:Int):Float,
     TotalCommunityWeight:Float
 }
@@ -41,14 +41,14 @@ type Query{
 
 
 input Householdinput{
-    name:String,
-    country:String,
-    address:String ,
-    JoinDate:String,
-
+    username: String!
+    password: String!
+    email: String!
+    fullName: String!
+    country: String!
+    address: String!
 }
 input RecyclingEventinput{
-    id:ID,
     MaterialType:String,
     WeightKG:Float ,
     recyclingDate:String,
