@@ -1,10 +1,7 @@
 package org.example.ecopoints_recycling_tracker.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,17 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString(exclude = "recyclingEvents")
 public class Household extends Users{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",unique = true, nullable = false)
-    private int id;
-    private String FullName;
+    private String fullName;
     private String country;
     private String address;
-    private LocalDate JoinDate=LocalDate.now();
+    private LocalDate JoinDate;
     private double TotalPoints;
-
     @OneToMany(mappedBy = "household", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RecyclingEvent> recyclingEvents = new ArrayList<>();
 

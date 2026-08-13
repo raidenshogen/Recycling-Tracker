@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -12,18 +13,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString(exclude = "household")
 public class RecyclingEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true, nullable = false)
     private int id;
     @Enumerated(EnumType.STRING)
-    private MaterialType MatType;
+    private MaterialType matType;
     private float WeightKG;
     private LocalDateTime recyclingDate=LocalDateTime.now();
     private double EcoPoints;
-
-
 
     @ManyToOne
     @JoinColumn(name="household_id")

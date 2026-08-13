@@ -1,0 +1,38 @@
+List of Households With their Recycling events:
+Household 1:
+Name: jlknonp
+Address: casa
+Join Date: 2026-08-08
+Total Points: 0.0
+Recycling Event 1:
+Material: GLASS
+Weight in KG: 1.5
+Recycling Date: 2026-08-08T22:37:36.262210
+Eco points: 15.0
+Recycling Event 2:
+Material: GLASS
+Weight in KG: 1.5
+Recycling Date: 2026-08-08T22:39:24.607051
+Eco points: 15.0
+
+Household 2:
+Name: tantan
+Address: tanger
+Join Date: 2026-08-08
+Total Points: 0.0
+Recycling Event 1:
+Material: PLASTIC
+Weight in KG: 2.0
+Recycling Date: 2026-08-08T22:40:20.554054
+Eco points: 20.0
+Recycling Event 2:
+Material: PLASTIC
+Weight in KG: 2.0
+Recycling Date: 2026-08-08T22:40:50.662333
+Eco points: 20.0
+Recycling Event 3:
+Material: PLASTIC
+Weight in KG: 2.0
+Recycling Date: 2026-08-08T22:41:17.487730
+Eco points: 20.0
+

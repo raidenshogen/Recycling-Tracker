@@ -7,7 +7,7 @@ type Users {
 
 type Household{
     id: ID,
-    name:String,
+    fullName:String,
     country:String,
     address:String ,
     JoinDate:String,
@@ -16,26 +16,33 @@ type Household{
 }
 
 type RecyclingEvent{
-    id:ID,
-    MaterialType:String,
+    id:ID!,
+    matType:MaterialType,
     WeightKG:Float ,
     recyclingDate:String,
     EcoPoints: Float,
     household:Household
 }
+type AuthPayload {
+    token: String!
+    role: String!
+    householdId: Int
+}
+
 type Mutation{
     CreateHousehold(household: Householdinput!):Household,
-    CalculateTotalPoints(housholdId:ID):Float,
+    CalculateTotalPoints(id:Int!):Float,
     SavelogsForHouseholds:Boolean,
-    CalculateTotalWeights(household:Householdinput!):Float,
-    AddRecyclingEvent(RE:RecyclingEventinput! ):RecyclingEvent,
-    DeleteRecyclingEvent(RE:RecyclingEventinput!):Boolean,
-    CalculateTotalEcoPoints(weight:Int):Float,
+    CalculateTotalWeights(id:Int!):Float,
+    addRecyclingEvent(dto:RecyclingEventinput!):RecyclingEvent,
+    DeleteRecyclingEvent(id:Int!):Boolean,
+    CalculateTotalEcoPoints(weight:Float!):Float,
     TotalCommunityWeight:Float
+    login(username: String!, password: String!): AuthPayload
 }
 type Query{
-    findAllRecyclingEventsByHouseholdId(id:ID):[RecyclingEvent],
-    HighestTotalPoints:Household
+    findAllRecyclingEventsByHouseholdId(id:Int!):[RecyclingEvent],
+    HouseholdHaveHighestTotalPoints:Household
 }
 
 
@@ -49,8 +56,12 @@ input Householdinput{
     address: String!
 }
 input RecyclingEventinput{
-    MaterialType:String,
+    matType:MaterialType,
     WeightKG:Float ,
-    recyclingDate:String,
+    householdId:Int!,
 
+}
+
+enum MaterialType {
+    PLASTIC, GLASS, METAL, PAPER
 }

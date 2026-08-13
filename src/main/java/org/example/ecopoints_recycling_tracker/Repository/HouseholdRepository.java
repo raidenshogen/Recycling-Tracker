@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface HouseholdRepository extends JpaRepository<Household, Integer> {
 
-    public Household findById(int householdId);
+
+    boolean existsByEmail(String email);
 }
